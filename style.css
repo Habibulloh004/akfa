@@ -1,0 +1,37 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+body {
+    position: relative;
+}
+#month {
+    position: absolute;
+    top: 0px;
+    right: 100px;
+    padding: 5px 10px;
+}
+
+
+
+table {
+    margin: 30px auto;
+    width: 60%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+}
+
+#error {
+    color: red ;
+}
