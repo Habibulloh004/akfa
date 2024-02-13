@@ -7,6 +7,19 @@ if (+currentMonth < 10) {
 
 const select = document.getElementById("month");
 const error = document.getElementById("error");
+const excel = document.getElementById("excel");
+
+const allClientSpan = document.getElementById("all_clients");
+const allCountSpan = document.getElementById("all_count");
+const breakfastsCountSpan = document.getElementById("count_breakfasts");
+const dinnersCountSpan = document.getElementById("count_dinners");
+const lunchesCountSpan = document.getElementById("count_lunches");
+let allClientCount;
+let totalCount;
+let breakfastsCount;
+let dinnersCount;
+let lunchesCount;
+// `data[0].clients` dagi ma'lumotla
 
 const monthNames = [
   "January",
@@ -69,19 +82,43 @@ function renderTable(filteredData) {
 }
 
 fetch(
-  `https://akfa-abushukurov0806.replit.app/?month=${currentYear}-${currentMonth}&year=${currentYear}`
+  `https://akfa-abushukurov0806.replit.app/get_month_data?month=${currentMonth}&year=${currentYear}`
 )
   .then((response) => response.json())
   .then((result) => {
     error.innerHTML = "";
     data.push(result);
-    renderTable(result.clients);
-    if (data[0].message) {
+    renderTable(result.month_data);
+    if (data[0]?.message) {
       error.innerHTML = data[0]?.message;
-      //   setTimeout(() => (error.innerHTML = ""), 3000);
-    } else {
-      renderTable(result.clients);
     }
+    allClientCount = result.month_data.length
+    totalCount = data[0]?.month_data.reduce(
+      (total, client) => total + client.all_count,
+      0
+    ); // Umumiy ma'lumotlar soni
+
+    breakfastsCount = data[0]?.month_data.reduce(
+      (total, client) => total + client.count_breakfasts,
+      0
+    ); // Nonushta ma'lumotlar sonini hisoblash
+    dinnersCount = data[0]?.month_data.reduce(
+      (total, client) => total + client.count_dinners,
+      0
+    ); // Tushlik ma'lumotlar sonini hisoblash
+    lunchesCount = data[0]?.month_data.reduce(
+      (total, client) => total + client.count_lunches,
+      0
+    ); // Tushlik ma'lumotlar sonini hisoblash
+
+    // HTML taglariga ma'lumotlarni yozish
+    allClientSpan.innerHTML = `All count: ${allClientCount}`;
+    allCountSpan.innerHTML = `All count: ${totalCount}`;
+    breakfastsCountSpan.innerHTML = `Breakfasts count: ${breakfastsCount}`;
+    dinnersCountSpan.innerHTML = `Dinners count: ${dinnersCount}`;
+    lunchesCountSpan.innerHTML = `Lunches count: ${lunchesCount}`;
+
+    // HTML taglariga ma'lumotlarni yozish
   })
   .catch((err) => {
     console.log(err);
@@ -91,22 +128,90 @@ fetch(
 select.addEventListener("change", (event) => {
   const selectedValue = event.target.value;
   fetch(
-    `https://akfa-abushukurov0806.replit.app/?month=${currentYear}-${selectedValue}&year=${currentYear}`
+    `https://akfa-abushukurov0806.replit.app/get_month_data?month=${selectedValue}&year=${currentYear}`
+
   )
     .then((response) => response.json())
     .then((result) => {
       error.innerHTML = "";
-
       data.pop();
       data.push(result);
-      if (data[0].message) {
+      if (data[0]?.message) {
         error.innerHTML = data[0]?.message;
-        // setTimeout(() => (error.innerHTML = ""), 3000);
       } else {
-        renderTable(result.clients);
+        renderTable(result.month_data);
+        allClientCount = data[0]?.month_data.length
+        totalCount = data[0]?.month_data.reduce(
+          (total, client) => total + client.all_count,
+          0
+        ); // Umumiy ma'lumotlar soni
+
+        breakfastsCount = data[0]?.month_data.reduce(
+          (total, client) => total + client.count_breakfasts,
+          0
+        ); // Nonushta ma'lumotlar sonini hisoblash
+        dinnersCount = data[0]?.month_data.reduce(
+          (total, client) => total + client.count_dinners,
+          0
+        ); // Tushlik ma'lumotlar sonini hisoblash
+        lunchesCount = data[0]?.month_data.reduce(
+          (total, client) => total + client.count_lunches,
+          0
+        ); // Tushlik ma'lumotlar sonini hisoblash
+
+        // HTML taglariga ma'lumotlarni yozish
+        allClientSpan.innerHTML = `All clients: ${allClientCount}`;
+        allCountSpan.innerHTML = `All count: ${totalCount}`;
+        breakfastsCountSpan.innerHTML = `Breakfasts count: ${breakfastsCount}`;
+        dinnersCountSpan.innerHTML = `Dinners count: ${dinnersCount}`;
+        lunchesCountSpan.innerHTML = `Lunches count: ${lunchesCount}`;
+
       }
     })
     .catch((err) => {
       console.log(err);
     });
 });
+
+function downloadExcel() {
+  const workbook = XLSX.utils.book_new();
+  workbook.Props = {
+    Title: "Data",
+    Subject: "Data Export",
+    Author: "Your Name",
+    CreatedDate: new Date(),
+  };
+
+  const worksheet = XLSX.utils.json_to_sheet(data[0]?.month_data || []);
+
+  // Qo'shimcha ustunlarni yaratish
+  const additionalData = [
+    { Client: "Clients Count", Count: allClientCount },
+    { Client: "Total Count", Count: totalCount },
+    { Client: "Breakfasts Count", Count: breakfastsCount },
+    { Client: "Dinners Count", Count: dinnersCount },
+    { Client: "Lunches Count", Count: lunchesCount },
+  ];
+
+  // Qo'shimcha ustunlarni worksheet ga qo'shish
+  XLSX.utils.sheet_add_json(worksheet, additionalData, {
+    skipHeader: true,
+    origin: -1, // Qo'shimcha ma'lumotlarni tabelning pastidan boshlanishini ta'minlash
+  });
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+
+  // Excel faylini eksport qilish
+  XLSX.writeFile(workbook, "data.xlsx");
+}
+
+excel.addEventListener("click", () => {
+  downloadExcel();
+});
+
+excel.addEventListener("click", () => {
+  downloadExcel();
+});
+
+// Ma'lumotlarning yig'indisi
+// Ma'lumotlarning yig'indisi

@@ -1,37 +1,87 @@
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
 }
 
 body {
-    position: relative;
-}
-#month {
-    position: absolute;
-    top: 0px;
-    right: 100px;
-    padding: 5px 10px;
+    height: 100vh;
+    width: 100%;
 }
 
+main {
+  position: relative;
+  width: 100%; /* Adjust the width as needed */
+  padding: 30px 0;
+}
 
-
-table {
-    margin: 30px auto;
-    width: 60%;
-    border-collapse: collapse;
+.container {
+    width: 90%;
+    margin: 0 auto;
     text-align: center;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
+#month {
+  position: absolute;
+  top: 30px;
+  right: 100px;
+  padding: 5px 10px;
+}
+#date {
+  position: absolute;
+  top: 30px;
+  right: 100px;
+  padding: 3px;
+}
+#excel {
+  /* position: absolute;
+    top: 70px;
+    right: 100px; */
+  padding: 5px;
+  border: none;
+  background: rgb(66, 112, 177);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 3px;
 }
 
-th, td {
-    padding: 10px;
+p {
+  font-size: 20px;
+}
+
+a {
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+table {
+  margin: 30px auto;
+  width: 70%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 10px;
 }
 
 #error {
-    color: red ;
+  color: red;
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 60%;
+  margin: 20px auto;
 }
