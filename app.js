@@ -1,4 +1,11 @@
 const data = [];
+window.addEventListener(
+  "load",
+  function () {
+    top.postMessage({ hideSpinner: true }, "*");
+  },
+  false
+);
 const currentYear = new Date().getFullYear();
 let currentMonth = "" + (new Date().getMonth() + 1);
 if (+currentMonth < 10) {
@@ -92,7 +99,7 @@ fetch(
     if (data[0]?.message) {
       error.innerHTML = data[0]?.message;
     }
-    allClientCount = result.month_data.length
+    allClientCount = result.month_data.length;
     totalCount = data[0]?.month_data.reduce(
       (total, client) => total + client.all_count,
       0
@@ -129,7 +136,6 @@ select.addEventListener("change", (event) => {
   const selectedValue = event.target.value;
   fetch(
     `https://akfa-abushukurov0806.replit.app/get_month_data?month=${selectedValue}&year=${currentYear}`
-
   )
     .then((response) => response.json())
     .then((result) => {
@@ -140,7 +146,7 @@ select.addEventListener("change", (event) => {
         error.innerHTML = data[0]?.message;
       } else {
         renderTable(result.month_data);
-        allClientCount = data[0]?.month_data.length
+        allClientCount = data[0]?.month_data.length;
         totalCount = data[0]?.month_data.reduce(
           (total, client) => total + client.all_count,
           0
@@ -165,7 +171,6 @@ select.addEventListener("change", (event) => {
         breakfastsCountSpan.innerHTML = `Breakfasts count: ${breakfastsCount}`;
         dinnersCountSpan.innerHTML = `Dinners count: ${dinnersCount}`;
         lunchesCountSpan.innerHTML = `Lunches count: ${lunchesCount}`;
-
       }
     })
     .catch((err) => {
