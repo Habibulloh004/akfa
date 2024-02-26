@@ -1,4 +1,11 @@
 const data = [];
+window.addEventListener(
+  "load",
+  function () {
+    top.postMessage({ hideSpinner: true }, "*");
+  },
+  false
+);
 const currentYear = new Date().getFullYear();
 let choosenDate = document.getElementById("date");
 let currentMonth = "" + (new Date().getMonth() + 1);
@@ -25,9 +32,7 @@ if (+currentDay < 10) {
 }
 
 fetch(
-  `https://akfa-abushukurov0806.replit.app/?date=${currentYear}-${currentMonth}-${
-    currentDay
-  }`
+  `https://akfa-medline-6e32a4d30dfa.herokuapp.com/?date=${currentYear}-${currentMonth}-${currentDay}`
 )
   .then((response) => response.json())
   .then((result) => {
@@ -111,7 +116,7 @@ function renderTable(filteredData) {
 choosenDate.addEventListener("change", (event) => {
   const selectedValue = event.target.value;
   fetch(
-    `https://akfa-abushukurov0806.replit.app/?date=${currentYear}-${selectedValue.slice(
+    `https://akfa-medline-6e32a4d30dfa.herokuapp.com/?date=${currentYear}-${selectedValue.slice(
       5
     )}`
   )

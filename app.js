@@ -89,7 +89,7 @@ function renderTable(filteredData) {
 }
 
 fetch(
-  `https://akfa-abushukurov0806.replit.app/get_month_data?month=${currentMonth}&year=${currentYear}`
+  `https://akfa-medline-6e32a4d30dfa.herokuapp.com/get_month_data?month=${currentMonth}&year=${currentYear}`
 )
   .then((response) => response.json())
   .then((result) => {
@@ -135,7 +135,7 @@ fetch(
 select.addEventListener("change", (event) => {
   const selectedValue = event.target.value;
   fetch(
-    `https://akfa-abushukurov0806.replit.app/get_month_data?month=${selectedValue}&year=${currentYear}`
+    `https://akfa-medline-6e32a4d30dfa.herokuapp.com/get_month_data?month=${selectedValue}&year=${currentYear}`
   )
     .then((response) => response.json())
     .then((result) => {
