@@ -18,9 +18,9 @@ const excel = document.getElementById("excel");
 
 const allClientSpan = document.getElementById("all_clients");
 const allCountSpan = document.getElementById("all_count");
-const breakfastsCountSpan = document.getElementById("count_breakfasts");
-const dinnersCountSpan = document.getElementById("count_dinners");
-const lunchesCountSpan = document.getElementById("count_lunches");
+const breakfastsCountSpan = document.getElementById("total_breakfasts");
+const dinnersCountSpan = document.getElementById("total_dinners");
+const lunchesCountSpan = document.getElementById("total_lunches");
 let allClientCount;
 let totalCount;
 let breakfastsCount;
@@ -96,25 +96,26 @@ fetch(
     error.innerHTML = "";
     data.push(result);
     renderTable(result.month_data);
+    console.log(result.month_data);
     if (data[0]?.message) {
       error.innerHTML = data[0]?.message;
     }
     allClientCount = result.month_data.length;
     totalCount = data[0]?.month_data.reduce(
-      (total, client) => total + client.all_count,
+      (total, client) => total + client.total_all_count,
       0
     ); // Umumiy ma'lumotlar soni
 
     breakfastsCount = data[0]?.month_data.reduce(
-      (total, client) => total + client.count_breakfasts,
+      (total, client) => total + client.total_breakfasts,
       0
     ); // Nonushta ma'lumotlar sonini hisoblash
     dinnersCount = data[0]?.month_data.reduce(
-      (total, client) => total + client.count_dinners,
+      (total, client) => total + client.total_dinners,
       0
     ); // Tushlik ma'lumotlar sonini hisoblash
     lunchesCount = data[0]?.month_data.reduce(
-      (total, client) => total + client.count_lunches,
+      (total, client) => total + client.total_lunches,
       0
     ); // Tushlik ma'lumotlar sonini hisoblash
 
@@ -148,20 +149,20 @@ select.addEventListener("change", (event) => {
         renderTable(result.month_data);
         allClientCount = data[0]?.month_data.length;
         totalCount = data[0]?.month_data.reduce(
-          (total, client) => total + client.all_count,
+          (total, client) => total + client.total_all_count,
           0
         ); // Umumiy ma'lumotlar soni
 
         breakfastsCount = data[0]?.month_data.reduce(
-          (total, client) => total + client.count_breakfasts,
+          (total, client) => total + client.total_breakfasts,
           0
         ); // Nonushta ma'lumotlar sonini hisoblash
         dinnersCount = data[0]?.month_data.reduce(
-          (total, client) => total + client.count_dinners,
+          (total, client) => total + client.total_dinners,
           0
         ); // Tushlik ma'lumotlar sonini hisoblash
         lunchesCount = data[0]?.month_data.reduce(
-          (total, client) => total + client.count_lunches,
+          (total, client) => total + client.total_lunches,
           0
         ); // Tushlik ma'lumotlar sonini hisoblash
 
