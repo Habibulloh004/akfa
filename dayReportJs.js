@@ -32,7 +32,7 @@ if (+currentDay < 10) {
 }
 
 fetch(
-  `https://akfa-medline-6e32a4d30dfa.herokuapp.com/?date=${currentYear}-${currentMonth}-${currentDay}`
+  `http://212.86.115.143:5000/?date=${currentYear}-${currentMonth}-${currentDay}`
 )
   .then((response) => response.json())
   .then((result) => {
@@ -117,7 +117,7 @@ function renderTable(filteredData) {
 choosenDate.addEventListener("change", (event) => {
   const selectedValue = event.target.value;
   fetch(
-    `https://akfa-medline-6e32a4d30dfa.herokuapp.com/?date=${currentYear}-${selectedValue.slice(
+    `http://212.86.115.143:5000/?date=${currentYear}-${selectedValue.slice(
       5
     )}`
   )
